@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "many"
+version = "0.1.0"
+description = ""
+authors = ["Thijsvandepoll <thijsvandepoll@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+typer = "^0.9.0"
+mako = "^1.2.4"
+jupyter = "^1.0.0"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.3.0"
+flake8 = "^6.0.0"
+isort = "^5.12.0"
+pre-commit = "^3.3.2"
+pytest = "^7.3.1"
+pytest-cov = "^4.1.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+

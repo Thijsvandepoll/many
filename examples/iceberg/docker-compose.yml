@@ -1,0 +1,33 @@
+services:
+
+  minio:
+    image: "minio/minio:latest"
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ACCESS_KEY: minioadmin
+      MINIO_SECRET_KEY: minioadmin
+    command: [ "server", "/data", "--console-address", ":9001" ]
+
+  minio-setup:
+    depends_on:
+      - minio
+    image: minio/mc
+    environment:
+      - MINIO_ACCESS_KEY=minioadmin
+      - MINIO_SECRET_KEY=minioadmin
+    entrypoint:
+      - /bin/sh
+      - -c
+    command:
+      - |
+        curl -XGET https://vault.centos.org/centos/8/BaseOS/$(uname -m)/os/Packages/unzip-6.0-45.el8_4.$(uname -m).rpm --output unzip-6.0-45.el8_4.$(uname -m).rpm
+        rpm -ivh unzip-6.0-45.el8_4.$(uname -m).rpm
+        until (/usr/bin/mc config host add minio http://minio:9000 minioadmin minioadmin) do 
+          echo '...waiting...' && sleep 1; 
+        done
+        /usr/bin/mc rm -r --force minio/lakehouse;
+        /usr/bin/mc mb minio/lakehouse;
+        /usr/bin/mc policy set public minio/lakehouse;
+        exit 0;
