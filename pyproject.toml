@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "many-migrations"
+name = "many"
 version = "0.1.0"
 description = ""
 authors = ["Thijsvandepoll <thijsvandepoll@gmail.com>"]
