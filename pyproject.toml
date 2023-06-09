@@ -1,9 +1,12 @@
 [tool.poetry]
-name = "many"
+name = "many-migrations"
 version = "0.1.0"
 description = ""
 authors = ["Thijsvandepoll <thijsvandepoll@gmail.com>"]
 readme = "README.md"
+packages = [
+    {include = "src/many"}
+]
 
 [tool.poetry.dependencies]
 python = "^3.10"
