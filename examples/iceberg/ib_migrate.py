@@ -3,8 +3,7 @@ from typing import Any, Tuple
 
 from pyspark.sql import SparkSession
 
-from many import MigrationEngine, init_app
-from many.templates import spark_template
+from many import MigrationEngine, init_app, spark_template
 
 spark: SparkSession = None
 

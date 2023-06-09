@@ -1,8 +1,15 @@
+import tomli
 from setuptools import find_packages, setup
+
+# Read the version from pyproject.toml
+version = None
+with open("pyproject.toml", "rb") as fp:
+    pyproject_toml = tomli.load(fp)
+    version = pyproject_toml["tool"]["poetry"]["version"]
 
 setup(
     name="many-migrations",
-    version="0.2",
+    version=version,
     description="A library to create a customized migration application.",
     author="Thijs van de Poll",
     author_email="thijsvandepoll@gmail.com",

@@ -3,8 +3,7 @@ from typing import Any, Tuple
 from elasticsearch import Elasticsearch
 from elasticsearch_dsl.connections import connections
 
-from many import MigrationEngine, init_app
-from many.templates import elasticsearch_template
+from many import MigrationEngine, elasticsearch_template, init_app
 
 es: Elasticsearch = None
 

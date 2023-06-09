@@ -6,7 +6,7 @@ from unittest.mock import Mock
 import pytest
 
 import many
-from many.revise import Revisions
+from many import Revisions
 from tests.utils import read_file
 
 

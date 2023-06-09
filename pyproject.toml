@@ -5,7 +5,7 @@ description = ""
 authors = ["Thijsvandepoll <thijsvandepoll@gmail.com>"]
 readme = "README.md"
 packages = [
-    {include = "src/many"}
+    {include = "many"}
 ]
 
 [tool.poetry.dependencies]
@@ -16,11 +16,12 @@ mako = "^1.2.4"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.3.0"
-flake8 = "^6.0.0"
+flake8 = "^5.0.0"
 isort = "^5.12.0"
 pre-commit = "^3.3.2"
 pytest = "^7.3.1"
 pytest-cov = "^4.1.0"
+tomli = "^2.0.1"
 
 [build-system]
 requires = ["poetry-core"]

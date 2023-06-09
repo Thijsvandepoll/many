@@ -2,8 +2,8 @@ import os
 
 import pytest
 
+from many import Revisions
 from many.migrate import Migrator
-from many.revise import Revisions
 from tests.utils import LocalMigrationEngine, read_file
 
 

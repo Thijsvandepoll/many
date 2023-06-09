@@ -4,8 +4,7 @@ from typing import Any, Tuple
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import scoped_session, sessionmaker
 
-from many import MigrationEngine, init_app
-from many.templates import sqlalchemy_template
+from many import MigrationEngine, init_app, sqlalchemy_template
 
 engine = create_engine(f"postgresql+psycopg2://root:root@localhost:5432/mydatabase")
 session_factory = sessionmaker(bind=engine, autoflush=True)
