@@ -12,41 +12,38 @@ def test_migrate_up_down(tmp_path, fake_local_migrations):
 
     engine = LocalMigrationEngine()
     revisions = Revisions(fake_local_migrations)
-    app = Migrator(engine=engine, revisions=revisions)
+    migrator = Migrator(engine=engine, revisions=revisions)
 
     # Test if migration can happen when not initialized
     with pytest.raises(ValueError):
-        app.up()
+        migrator.up()
 
-    app.init()
+    migrator.init()
     assert os.path.exists("state.txt")
 
     # Migrate up one
-    app.up(level="1")
+    migrator.up(level="1")
     assert os.path.exists("data_store.txt")
 
     file = read_file("data_store.txt")
     assert file == "Hello world!"
-    assert app.get_current_state() == "v1"
+    assert migrator.get_current_state() == "v1"
 
-    with pytest.raises(SystemExit):
-        # Migrate up head
-        app.up()
+    migrator.up()
     assert read_file("data_store.txt") == "Bye world!"
-    assert app.get_current_state() == "v2"
+    assert migrator.get_current_state() == "v2"
 
     # Migrate one down
-    app.down(level="1")
+    migrator.down(level="1")
     assert read_file("data_store.txt") == "Hello world!"
-    assert app.get_current_state() == "v1"
+    assert migrator.get_current_state() == "v1"
 
     # Migrate one up
-    app.up(level="1")
+    migrator.up(level="1")
     assert read_file("data_store.txt") == "Bye world!"
-    assert app.get_current_state() == "v2"
+    assert migrator.get_current_state() == "v2"
 
     # Migrate down to base
-    with pytest.raises(SystemExit):
-        app.down()
+    migrator.down()
     assert not os.path.exists("data_store.txt")
-    assert app.get_current_state() is None
+    assert migrator.get_current_state() is None

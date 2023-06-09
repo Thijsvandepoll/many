@@ -13,14 +13,14 @@ class Migrator:
     def init(self):
         if self.engine.remote_exists():
             print("Remote state already exists.")
-            exit(0)
+            return
         self.engine.init_remote()
         print("Remote state initialized")
 
     def one_up_from(self, state: Union[str, int]):
         if not self.revisions.has_upgrade(state):
             print("Migrations complete. No upgrades to run.")
-            exit(0)
+            return
         method, target_state = self.revisions.get_upgrade(state)
 
         # Run upgrade with arguments
@@ -34,7 +34,7 @@ class Migrator:
     def one_down_from(self, state: Union[str, int]):
         if not self.revisions.has_downgrade(state):
             print("Migrations complete. No downgrades to run.")
-            exit(0)
+            return
 
         method, target_state = self.revisions.get_downgrade(state)
 
@@ -63,6 +63,8 @@ class Migrator:
         i = 0
         while i < level:
             new_state = self.one_up_from(current_state)
+            if new_state is None:
+                break
             current_state = new_state
             i += 1
 
@@ -78,5 +80,7 @@ class Migrator:
         i = 0
         while i < level:
             new_state = self.one_down_from(current_state)
+            if new_state is None:
+                break
             current_state = new_state
             i += 1
