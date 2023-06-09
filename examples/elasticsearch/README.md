@@ -21,7 +21,7 @@ python es_migrate.py revision create -m "My first migration"
 ```
 
 Modify the created template to customize the first migration to your needs, say:
-```
+```python
 def up(connection: Elasticsearch):
     connection.indices.create(
         index="twitter",
@@ -63,7 +63,7 @@ python es_migrate.py revision create -m "Insert some data"
 ```
 
 Modify the created template to insert some data, say:
-```
+```python
 def up(connection: Elasticsearch):
     connection.index(
         index="twitter",

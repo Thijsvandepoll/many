@@ -16,7 +16,7 @@ python ib_migrate.py revision create -m "My first migration"
 ```
 
 Modify the created template to customize the first migration to your needs, say:
-```
+```python
 def up(session: SparkSession):
     session.sql("CREATE NAMESPACE IF NOT EXISTS twitter;")
     session.sql(
@@ -39,7 +39,7 @@ python ib_migrate.py migrate up
 ```
 
 Using a small python script reusing the `get_session()` function, it is possible to verify that the remote state has been updated and that the table exists:
-```
+```python
 # This shows that the state has been updated
 get_session().sql("SELECT * FROM migrations.migrations").show()
 
@@ -53,7 +53,7 @@ python ib_migrate.py revision create -m "Insert some data"
 ```
 
 Modify the template to insert some data:
-```
+```python
 def up(session: SparkSession):
     df = session.createDataFrame(
         [

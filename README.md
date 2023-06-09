@@ -9,7 +9,7 @@ To create your own migration application for your data store:
 4. Run you application.
 
 How this would look like:
-```
+```python
 # migration_app.py
 
 from many import MigrationEngine, init_app
