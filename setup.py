@@ -2,7 +2,7 @@ from setuptools import find_packages, setup
 
 setup(
     name="many-migrations",
-    version="0.1",
+    version="0.2",
     description="A library to create a customized migration application.",
     author="Thijs van de Poll",
     author_email="thijsvandepoll@gmail.com",
