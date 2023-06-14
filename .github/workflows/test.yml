@@ -28,7 +28,7 @@ jobs:
           pip install coverage-badge
       - name: Test with pytest
         run: |
-          pytest --cov .
+          pytest --cov ./many
       - name: Generate coverage badge
         run: |
           coverage-badge -o coverage.svg
