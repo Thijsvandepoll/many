@@ -1,4 +1,6 @@
 # Many: A library to migrate anything!
+![Coverage Badge](coverage.svg)
+
 Managing state changes in data stores is an important part of the development process. There are many great migration tool available for SQL-like databases. However, there is lack of support for other data stores. Because of that I created a small library called `many` which can be used to build your own migration tool for any data store.
 
 ## Creating your own application
