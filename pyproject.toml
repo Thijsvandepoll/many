@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "many-migrations"
-version = "0.3"
+version = "1.0"
 description = ""
 authors = ["Thijsvandepoll <thijsvandepoll@gmail.com>"]
 readme = "README.md"
