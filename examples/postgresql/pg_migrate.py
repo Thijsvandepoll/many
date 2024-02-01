@@ -1,10 +1,11 @@
 from contextlib import contextmanager
-from typing import Any, Tuple
+from typing import Any, Dict, Tuple
 
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import scoped_session, sessionmaker
 
-from many import MigrationEngine, init_app, sqlalchemy_template
+from many import MigrationEngine, init_app
+from many.templates import sqlalchemy_template
 
 engine = create_engine(f"postgresql+psycopg2://root:root@localhost:5432/mydatabase")
 session_factory = sessionmaker(bind=engine, autoflush=True)
@@ -75,8 +76,8 @@ class PostgresEngine(MigrationEngine):
         if version:
             return version[0]
 
-    def prepare_args(self) -> Tuple[Any]:
-        return (Session(),)
+    def prepare_args(self, **app_kwargs) -> Tuple[Tuple[Any], Dict[Any, Any]]:
+        return (Session(),), app_kwargs
 
 
 if __name__ == "__main__":

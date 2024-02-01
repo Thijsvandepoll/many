@@ -36,31 +36,31 @@ class TestRevisions:
         upgrade, new_state = collection.get_upgrade(None)
         assert (
             inspect.getsource(upgrade)
-            == 'def up(*args):\n    with open("data_store.txt", "w") as f:\n       '
-            ' f.write("Hello world!")\n'
+            == 'def up(*args, **kwargs):\n    with open("data_store.txt", "w") as f:\n '
+            '       f.write("Hello world!")\n'
         )
         assert new_state == "v1"
 
         upgrade, new_state = collection.get_upgrade("v1")
         assert (
             inspect.getsource(upgrade)
-            == 'def up(*args):\n    with open("data_store.txt", "w") as f:\n       '
-            ' f.write("Bye world!")\n'
+            == 'def up(*args, **kwargs):\n    with open("data_store.txt", "w") as f:\n '
+            '       f.write("Bye world!")\n'
         )
         assert new_state == "v2"
 
         downgrade, new_state = collection.get_downgrade("v2")
         assert (
             inspect.getsource(downgrade)
-            == 'def down(*args):\n    with open("data_store.txt", "w") as f:\n       '
-            ' f.write("Hello world!")\n'
+            == 'def down(*args, **kwargs):\n    with open("data_store.txt", "w") as'
+            ' f:\n        f.write("Hello world!")\n'
         )
         assert new_state == "v1"
 
         downgrade, new_state = collection.get_downgrade("v1")
         assert (
             inspect.getsource(downgrade)
-            == 'def down(*args):\n    os.remove("data_store.txt")\n'
+            == 'def down(*args, **kwargs):\n    os.remove("data_store.txt")\n'
         )
         assert new_state is None
 

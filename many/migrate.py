@@ -17,21 +17,22 @@ class Migrator:
         self.engine.init_remote()
         print("Remote state initialized")
 
-    def one_up_from(self, state: Union[str, int]):
+    def one_up_from(self, state: Union[str, int], **app_kwargs):
         if not self.revisions.has_upgrade(state):
             print("Migrations complete. No upgrades to run.")
             return
         method, target_state = self.revisions.get_upgrade(state)
 
         # Run upgrade with arguments
-        method(*self.engine.prepare_args())
+        args, kwargs = self.engine.prepare_args(**app_kwargs)
+        method(*args, **kwargs)
 
         # Update remote state
         self.engine.update_remote(target_state)
         print(f"Migrated successfully (up) from {state} to {target_state}.")
         return target_state
 
-    def one_down_from(self, state: Union[str, int]):
+    def one_down_from(self, state: Union[str, int], **app_kwargs):
         if not self.revisions.has_downgrade(state):
             print("Migrations complete. No downgrades to run.")
             return
@@ -39,7 +40,8 @@ class Migrator:
         method, target_state = self.revisions.get_downgrade(state)
 
         # Run downgrade with arguments
-        method(*self.engine.prepare_args())
+        args, kwargs = self.engine.prepare_args(**app_kwargs)
+        method(*args, **kwargs)
 
         # Update remote state
         self.engine.update_remote(target_state)
@@ -51,7 +53,7 @@ class Migrator:
             raise ValueError("Remote state is not initialized.")
         return self.engine.get_remote()
 
-    def up(self, level: str = "head"):
+    def up(self, level: str = "head", **app_kwargs):
         if isinstance(level, str) and level.lower() != "head" and not level.isdigit():
             raise ValueError("level must be either 'head', or an integer")
         elif not level.isdigit():
@@ -62,13 +64,13 @@ class Migrator:
         current_state = self.get_current_state()
         i = 0
         while i < level:
-            new_state = self.one_up_from(current_state)
+            new_state = self.one_up_from(current_state, **app_kwargs)
             if new_state is None:
                 break
             current_state = new_state
             i += 1
 
-    def down(self, level: Union[int, str] = "base"):
+    def down(self, level: Union[int, str] = "base", **app_kwargs):
         if isinstance(level, str) and level.lower() != "base" and not level.isdigit():
             raise ValueError("level must be either 'base', or an integer")
         elif not level.isdigit():
@@ -79,7 +81,7 @@ class Migrator:
         current_state = self.get_current_state()
         i = 0
         while i < level:
-            new_state = self.one_down_from(current_state)
+            new_state = self.one_down_from(current_state, **app_kwargs)
             if new_state is None:
                 break
             current_state = new_state

@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Any, Tuple
+from typing import Any, Dict, Tuple
 
 
 class MigrationEngine(ABC):
@@ -19,6 +19,5 @@ class MigrationEngine(ABC):
     def get_remote(self) -> str:
         ...
 
-    @abstractmethod
-    def prepare_args(self) -> Tuple[Any]:
-        ...
+    def prepare_args(self, **app_kwargs) -> Tuple[Tuple[Any], Dict[Any, Any]]:
+        return ((),), app_kwargs

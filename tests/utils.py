@@ -1,5 +1,5 @@
 import os.path
-from typing import Any, Tuple
+from typing import Any, Dict, Tuple
 
 from many.engine import MigrationEngine
 
@@ -34,5 +34,5 @@ class LocalMigrationEngine(MigrationEngine):
         if out:
             return eval(out)
 
-    def prepare_args(self) -> Tuple[Any]:
-        return ((),)
+    def prepare_args(self, **app_kwargs) -> Tuple[Tuple[Any], Dict[Any, Any]]:
+        return ((),), app_kwargs

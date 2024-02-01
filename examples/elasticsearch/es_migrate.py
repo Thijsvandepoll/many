@@ -1,9 +1,10 @@
-from typing import Any, Tuple
+from typing import Any, Dict, Tuple
 
 from elasticsearch import Elasticsearch
 from elasticsearch_dsl.connections import connections
 
-from many import MigrationEngine, elasticsearch_template, init_app
+from many import MigrationEngine, init_app
+from many.templates import elasticsearch_template
 
 es: Elasticsearch = None
 
@@ -49,8 +50,8 @@ class ElasticsearchEngine(MigrationEngine):
         if response["_source"]:
             return response["_source"]["version"]
 
-    def prepare_args(self) -> Tuple[Any]:
-        return (get_connection(),)
+    def prepare_args(self, **app_kwargs) -> Tuple[Tuple[Any], Dict[Any, Any]]:
+        return (get_connection(),), app_kwargs
 
 
 if __name__ == "__main__":

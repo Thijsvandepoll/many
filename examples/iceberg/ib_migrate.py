@@ -1,9 +1,10 @@
 import os
-from typing import Any, Tuple
+from typing import Any, Dict, Tuple
 
 from pyspark.sql import SparkSession
 
-from many import MigrationEngine, init_app, spark_template
+from many import MigrationEngine, init_app
+from many.templates import spark_template
 
 spark: SparkSession = None
 
@@ -105,8 +106,8 @@ class IcebergEngine(MigrationEngine):
         if version:
             return version[0]
 
-    def prepare_args(self) -> Tuple[Any]:
-        return (get_session(),)
+    def prepare_args(self, **app_kwargs) -> Tuple[Tuple[Any], Dict[Any, Any]]:
+        return (get_session(),), app_kwargs
 
 
 if __name__ == "__main__":
