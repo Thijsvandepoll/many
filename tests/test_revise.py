@@ -98,7 +98,7 @@ class TestRevisions:
         )
         revisions.create_revision(m="My second migration")
 
-        assert os.listdir("versions") == [
+        assert sorted(os.listdir("versions")) == [
             "2010_01_01_0000-123abc_my_first_migration.py",
             "2010_01_01_0000-123xyz_my_second_migration.py",
         ]
