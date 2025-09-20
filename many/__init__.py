@@ -28,8 +28,19 @@ def _init_revision_app(revisions: Revisions):
     app = typer.Typer()
 
     @app.command(help="Create new revision")
-    def create(m: Annotated[str, Option("-m")]):
+    def create(m: str):
         revisions.create_revision(m=m)
+
+    @app.callback()
+    def dummy_to_force_subcommand() -> None:
+        """
+        This function exists because Typer won't let you force a single subcommand.
+        Since we know we will add other subcommands in the future and don't want to
+        break the interface, we have to use this workaround.
+
+        Delete this when a second subcommand is added.
+        """
+        pass
 
     return app
 

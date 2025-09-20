@@ -37,7 +37,7 @@ def test_app(tmp_path, fake_local_migrations):
     assert read_file("data_store.txt") == "Hello world!"
 
     # Create a new revision
-    result = runner.invoke(app, ["revision", "create", "-m", "Another migration"])
+    result = runner.invoke(app, ["revision", "create", "Another migration"])
     assert result.exit_code == 0
     assert len(os.listdir("versions")) == 3
 
